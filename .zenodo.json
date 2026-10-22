@@ -1,0 +1,9 @@
+{
+  "title": "EPI-GRAPHICS: browser-based journal-style figures (NEJM look) for clinical and epidemiological research",
+  "upload_type": "software",
+  "description": "Browser tool that builds publication-ready figures in the style of the New England Journal of Medicine: bar charts with comparison brackets, subgroup forest plots, curves with confidence intervals and number at risk, Kaplan-Meier curves from individual data, CONSORT flow diagrams, study-design schemas and stacked ordinal bars. Exports vector SVG and PNG/TIFF with embedded DPI at journal column widths. All drawing runs in the browser.",
+  "creators": [{ "name": "Fernández-Guzmán, Daniel" }],
+  "license": "cc-by-nc-nd-4.0",
+  "access_right": "open",
+  "keywords": ["figures", "forest plot", "Kaplan-Meier", "CONSORT", "scientific graphics", "epidemiology"]
+}

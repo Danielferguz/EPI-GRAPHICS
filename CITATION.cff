@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use EPI-GRAPHICS, please cite it as below."
+title: "EPI-GRAPHICS: browser-based journal-style figures (NEJM look) for clinical and epidemiological research"
+type: software
+authors:
+  - family-names: "Fernández-Guzmán"
+    given-names: "Daniel"
+version: "2026.10.22"
+date-released: "2026-10-22"
+license: CC-BY-NC-ND-4.0
+repository-code: "https://github.com/Danielferguz/EPI-GRAPHICS"
+url: "https://danielferguz.github.io/EPI-GRAPHICS/"
+keywords:
+  - figures
+  - forest plot
+  - Kaplan-Meier
+  - CONSORT flow diagram
+  - scientific graphics
+  - epidemiology

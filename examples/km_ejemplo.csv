@@ -1,0 +1,361 @@
+id,arm,months,kidney_failure
+1,Placebo,17.56,1
+2,Drug A,5.97,1
+3,Placebo,28.21,0
+4,Drug A,42.37,0
+5,Placebo,17.79,0
+6,Drug A,21.94,0
+7,Placebo,16.59,0
+8,Drug A,32.76,0
+9,Placebo,11.03,1
+10,Drug A,34.43,0
+11,Placebo,15.79,1
+12,Drug A,32.76,0
+13,Placebo,7.54,1
+14,Drug A,12.91,0
+15,Placebo,30.07,0
+16,Drug A,10.53,1
+17,Placebo,34.85,0
+18,Drug A,1.4,1
+19,Placebo,38.4,0
+20,Drug A,39.34,0
+21,Placebo,42.33,0
+22,Drug A,16.27,0
+23,Placebo,25.29,0
+24,Drug A,45.74,0
+25,Placebo,32.97,1
+26,Drug A,27.65,0
+27,Placebo,43.71,0
+28,Drug A,26.69,0
+29,Placebo,15.72,0
+30,Drug A,34.39,0
+31,Placebo,18.04,1
+32,Drug A,35.46,0
+33,Placebo,35.29,0
+34,Drug A,2.71,1
+35,Placebo,11.02,1
+36,Drug A,22.32,0
+37,Placebo,13.09,1
+38,Drug A,23.34,0
+39,Placebo,18.52,0
+40,Drug A,15.74,1
+41,Placebo,28.33,1
+42,Drug A,12.03,0
+43,Placebo,41.06,0
+44,Drug A,15.05,0
+45,Placebo,3.55,1
+46,Drug A,18.06,0
+47,Placebo,28.51,1
+48,Drug A,14.19,0
+49,Placebo,38.14,0
+50,Drug A,24.17,0
+51,Placebo,0.87,1
+52,Drug A,20.83,0
+53,Placebo,20.56,1
+54,Drug A,16.71,0
+55,Placebo,41.41,0
+56,Drug A,34.75,0
+57,Placebo,8.21,1
+58,Drug A,38.79,0
+59,Placebo,15.5,0
+60,Drug A,10.75,1
+61,Placebo,8.82,1
+62,Drug A,39.5,0
+63,Placebo,34.51,0
+64,Drug A,32.29,0
+65,Placebo,31.01,0
+66,Drug A,16.16,1
+67,Placebo,2.77,1
+68,Drug A,28.65,0
+69,Placebo,15.41,0
+70,Drug A,45.73,0
+71,Placebo,45.63,0
+72,Drug A,42.1,0
+73,Placebo,25.73,0
+74,Drug A,25.4,0
+75,Placebo,0.19,1
+76,Drug A,31.57,0
+77,Placebo,4.1,1
+78,Drug A,26.65,0
+79,Placebo,12.75,0
+80,Drug A,38.69,0
+81,Placebo,40.18,0
+82,Drug A,33.79,0
+83,Placebo,9.05,1
+84,Drug A,37.58,0
+85,Placebo,45.13,0
+86,Drug A,4.49,1
+87,Placebo,13.14,1
+88,Drug A,20.73,1
+89,Placebo,37.73,0
+90,Drug A,13.78,0
+91,Placebo,36.84,1
+92,Drug A,46.17,0
+93,Placebo,18.07,0
+94,Drug A,45.96,0
+95,Placebo,23.63,0
+96,Drug A,22.09,1
+97,Placebo,27.75,1
+98,Drug A,26.13,0
+99,Placebo,31.66,0
+100,Drug A,36.18,0
+101,Placebo,18.48,1
+102,Drug A,15.54,0
+103,Placebo,32.54,0
+104,Drug A,19.21,0
+105,Placebo,43.67,1
+106,Drug A,24.47,0
+107,Placebo,18.58,1
+108,Drug A,30.27,1
+109,Placebo,16.68,0
+110,Drug A,42.61,0
+111,Placebo,12.18,0
+112,Drug A,13.09,0
+113,Placebo,43.23,0
+114,Drug A,7.35,1
+115,Placebo,13.17,0
+116,Drug A,39.28,0
+117,Placebo,5.19,1
+118,Drug A,34.33,0
+119,Placebo,32.69,1
+120,Drug A,26.58,0
+121,Placebo,34.86,0
+122,Drug A,34.81,0
+123,Placebo,41.04,0
+124,Drug A,19.08,0
+125,Placebo,19.59,0
+126,Drug A,43.76,0
+127,Placebo,9.72,1
+128,Drug A,44.62,0
+129,Placebo,24.6,0
+130,Drug A,13.03,0
+131,Placebo,33.98,0
+132,Drug A,20.89,0
+133,Placebo,11.85,1
+134,Drug A,27.71,0
+135,Placebo,17.68,0
+136,Drug A,21.37,0
+137,Placebo,20.58,0
+138,Drug A,12.44,0
+139,Placebo,46.92,0
+140,Drug A,24.97,1
+141,Placebo,44.14,0
+142,Drug A,39.57,0
+143,Placebo,3.96,1
+144,Drug A,43.11,0
+145,Placebo,17.35,0
+146,Drug A,13.44,0
+147,Placebo,14.66,1
+148,Drug A,45.54,0
+149,Placebo,23.81,0
+150,Drug A,30.23,0
+151,Placebo,46.05,0
+152,Drug A,28.86,0
+153,Placebo,26.65,0
+154,Drug A,7.67,1
+155,Placebo,15.6,1
+156,Drug A,13.96,0
+157,Placebo,6.06,1
+158,Drug A,27.72,0
+159,Placebo,15.87,0
+160,Drug A,20.27,0
+161,Placebo,12.17,0
+162,Drug A,15.21,1
+163,Placebo,14.57,0
+164,Drug A,13.48,0
+165,Placebo,18.46,1
+166,Drug A,19.04,1
+167,Placebo,21.97,0
+168,Drug A,22.17,0
+169,Placebo,15.86,1
+170,Drug A,35.96,0
+171,Placebo,17.7,1
+172,Drug A,34.81,0
+173,Placebo,28.63,1
+174,Drug A,14.75,0
+175,Placebo,39.26,0
+176,Drug A,2.36,1
+177,Placebo,18.75,1
+178,Drug A,16.37,0
+179,Placebo,33.66,0
+180,Drug A,42.79,0
+181,Placebo,17.53,0
+182,Drug A,19.67,0
+183,Placebo,30.62,1
+184,Drug A,29.56,0
+185,Placebo,38.31,0
+186,Drug A,39.02,0
+187,Placebo,27.57,1
+188,Drug A,22.76,0
+189,Placebo,35.8,0
+190,Drug A,27.75,1
+191,Placebo,23.54,1
+192,Drug A,17.6,0
+193,Placebo,26.7,0
+194,Drug A,15.45,0
+195,Placebo,23.85,1
+196,Drug A,17.82,0
+197,Placebo,2.55,1
+198,Drug A,23.56,0
+199,Placebo,35.49,1
+200,Drug A,27.53,0
+201,Placebo,41.92,1
+202,Drug A,17.97,0
+203,Placebo,19.29,0
+204,Drug A,31.84,0
+205,Placebo,20.47,1
+206,Drug A,3.28,1
+207,Placebo,46.79,0
+208,Drug A,16,0
+209,Placebo,24.36,1
+210,Drug A,34.67,1
+211,Placebo,40.87,0
+212,Drug A,32.07,0
+213,Placebo,14.93,1
+214,Drug A,9.44,1
+215,Placebo,28.68,0
+216,Drug A,25.3,1
+217,Placebo,1.56,1
+218,Drug A,47.98,0
+219,Placebo,38.03,0
+220,Drug A,41.66,1
+221,Placebo,13.69,0
+222,Drug A,17.21,0
+223,Placebo,10.26,1
+224,Drug A,36.73,0
+225,Placebo,24.95,0
+226,Drug A,12.25,0
+227,Placebo,25.58,1
+228,Drug A,3.97,1
+229,Placebo,28.78,0
+230,Drug A,8.11,1
+231,Placebo,5.5,1
+232,Drug A,14.55,0
+233,Placebo,0.46,1
+234,Drug A,28.76,0
+235,Placebo,17.65,1
+236,Drug A,13.61,0
+237,Placebo,30.19,0
+238,Drug A,28.34,0
+239,Placebo,26.25,1
+240,Drug A,15,0
+241,Placebo,21.2,0
+242,Drug A,17.89,0
+243,Placebo,9.69,1
+244,Drug A,38.03,1
+245,Placebo,24.32,0
+246,Drug A,14.98,1
+247,Placebo,29.4,0
+248,Drug A,15.45,0
+249,Placebo,23.04,0
+250,Drug A,45.12,0
+251,Placebo,41.23,0
+252,Drug A,12.22,1
+253,Placebo,12.02,0
+254,Drug A,11.67,1
+255,Placebo,14.88,1
+256,Drug A,25.96,1
+257,Placebo,9.84,1
+258,Drug A,19.91,0
+259,Placebo,13.65,1
+260,Drug A,42.25,0
+261,Placebo,2.14,1
+262,Drug A,17.76,0
+263,Placebo,20.64,0
+264,Drug A,21.45,1
+265,Placebo,6.81,1
+266,Drug A,7.22,1
+267,Placebo,47.59,0
+268,Drug A,9.32,1
+269,Placebo,7.12,1
+270,Drug A,0.94,1
+271,Placebo,19.19,1
+272,Drug A,38.6,0
+273,Placebo,41.59,0
+274,Drug A,47.48,0
+275,Placebo,19.27,1
+276,Drug A,22.78,1
+277,Placebo,4.19,1
+278,Drug A,20.64,1
+279,Placebo,36.37,0
+280,Drug A,11.65,1
+281,Placebo,27.73,0
+282,Drug A,11.6,1
+283,Placebo,19.33,0
+284,Drug A,45.83,0
+285,Placebo,13.57,1
+286,Drug A,12.58,1
+287,Placebo,24.23,1
+288,Drug A,35.09,0
+289,Placebo,23.83,0
+290,Drug A,0.14,1
+291,Placebo,9.51,1
+292,Drug A,29.52,0
+293,Placebo,10.1,1
+294,Drug A,24.32,0
+295,Placebo,14.79,0
+296,Drug A,31.52,0
+297,Placebo,23.64,1
+298,Drug A,15.55,1
+299,Placebo,14.14,1
+300,Drug A,24.47,0
+301,Placebo,24.08,0
+302,Drug A,28.68,0
+303,Placebo,16.2,1
+304,Drug A,23.61,1
+305,Placebo,19.38,0
+306,Drug A,17.07,0
+307,Placebo,5.06,1
+308,Drug A,36.03,0
+309,Placebo,7.32,1
+310,Drug A,31.66,0
+311,Placebo,39.09,1
+312,Drug A,46.27,0
+313,Placebo,47.43,0
+314,Drug A,12.46,0
+315,Placebo,46.56,0
+316,Drug A,42.77,1
+317,Placebo,7.01,1
+318,Drug A,10.47,1
+319,Placebo,17.49,1
+320,Drug A,37.51,0
+321,Placebo,39.37,0
+322,Drug A,8.24,1
+323,Placebo,8.05,1
+324,Drug A,4.51,1
+325,Placebo,29.72,0
+326,Drug A,33.05,0
+327,Placebo,43.8,0
+328,Drug A,12.78,0
+329,Placebo,13.76,0
+330,Drug A,13.12,0
+331,Placebo,13.35,1
+332,Drug A,39.7,0
+333,Placebo,17.93,0
+334,Drug A,2.09,1
+335,Placebo,18.58,0
+336,Drug A,30.07,0
+337,Placebo,19.86,0
+338,Drug A,24.99,0
+339,Placebo,27.8,0
+340,Drug A,10.12,1
+341,Placebo,10.28,1
+342,Drug A,39.72,0
+343,Placebo,4.47,1
+344,Drug A,8.54,1
+345,Placebo,30.81,0
+346,Drug A,13.85,0
+347,Placebo,10.77,1
+348,Drug A,12.25,0
+349,Placebo,12.14,0
+350,Drug A,0.68,1
+351,Placebo,31.91,0
+352,Drug A,9.53,1
+353,Placebo,16.54,1
+354,Drug A,35.01,0
+355,Placebo,6.7,1
+356,Drug A,15.02,0
+357,Placebo,24.38,0
+358,Drug A,29.76,0
+359,Placebo,19.42,0
+360,Drug A,29.47,0
