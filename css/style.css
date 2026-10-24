@@ -162,3 +162,7 @@ main.ws-on > .pv { grid-column: 2; grid-row: 1 / span 6; position: sticky; top: 
 dialog { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); color: var(--text); max-width: 640px; width: 92vw; } dialog::backdrop { background: rgba(0,0,0,.35); }
 .nm { margin: 0; font-size: .98rem; }
 textarea { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .86rem; }
+
+/* EPI-GRAPHICS: tamaño de letra y paletas */
+.fz { display: inline-flex; align-items: center; gap: 6px; } .fz button { padding: 3px 10px; font-weight: 700; } .fz b { min-width: 3.4em; text-align: center; font-size: .86rem; }
+.swatches { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; } .swatches i { width: 26px; height: 16px; border-radius: 3px; border: 1px solid var(--line); } .swatches.edit input[type=color] { width: 34px; height: 28px; padding: 0; border: 1px solid var(--line); border-radius: 4px; background: none; cursor: pointer; }

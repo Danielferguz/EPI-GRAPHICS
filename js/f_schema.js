@@ -1,5 +1,5 @@
 // Esquema del diseño del estudio: fases → aleatorización → brazos de tratamiento → seguimiento, con línea de tiempo.
-import { T, L, R, arrow, textW, wrap, svgRoot, INK } from './svg.js?v=2026.10.22-1';
+import { T, L, R, arrow, textW, wrap, svgRoot, INK } from './svg.js?v=2026.10.24-2';
 
 export const schema = {
   id: 'schema', name: 'Esquema del diseño del estudio', short: 'Diseño',

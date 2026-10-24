@@ -1,5 +1,5 @@
 // Forest plot por subgrupos / desenlaces (estilo NEJM): etiquetas, n por brazo, estimador con IC, texto a la derecha y flechas «mejor».
-import { T, L, R, arrow, num, fmt, minus, textW, wrap, tickLabel, fmtTicks, niceTicks, makeScale, svgRoot, INK, FRAME, ZEBRA } from './svg.js?v=2026.10.22-1';
+import { T, L, R, arrow, num, fmt, minus, textW, wrap, tickLabel, fmtTicks, niceTicks, makeScale, svgRoot, INK, FRAME, ZEBRA } from './svg.js?v=2026.10.24-2';
 
 const row = (panel, label, n1, n2, est, lo, hi, kind = '') => ({ panel, label, n1, n2, est, lo, hi, kind });
 export const forest = {

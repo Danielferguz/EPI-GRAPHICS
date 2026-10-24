@@ -91,4 +91,12 @@ export const PALETTES = {
   epi: { name: 'EPI-LAB (azul verdoso, burdeos, carbón)', c: ['#2E7F90', '#8B2E3B', '#4D4D4D', '#5BA7B8', '#C46B78', '#8FA9AF'] },
   gray: { name: 'Escala de grises (impresión B/N)', c: ['#D9D9D9', '#A6A6A6', '#737373', '#404040', '#8C8C8C', '#BFBFBF'], line: ['#262626', '#8C8C8C', '#595959', '#BFBFBF', '#404040', '#A6A6A6'] },
   cb: { name: 'Apto para daltonismo (Okabe-Ito)', c: ['#0072B2', '#E69F00', '#009E73', '#D55E00', '#56B4E9', '#CC79A7'] },
+  lancet: { name: 'Lancet', c: ['#00468B', '#ED0000', '#42B540', '#0099B4', '#925E9F', '#FDAF91'] },
+  jama: { name: 'JAMA', c: ['#374E55', '#DF8F44', '#00A1D5', '#B24745', '#79AF97', '#6A6599'] },
+  npg: { name: 'Nature (NPG)', c: ['#E64B35', '#4DBBD5', '#00A087', '#3C5488', '#F39B7F', '#8491B4'] },
+  tableau: { name: 'Tableau 10', c: ['#4E79A7', '#F28E2B', '#E15759', '#76B7B2', '#59A14F', '#EDC948'] },
+  set2: { name: 'Set2 (cualitativa suave)', c: ['#66C2A5', '#FC8D62', '#8DA0CB', '#E78AC3', '#A6D854', '#FFD92F'] },
+  viridis: { name: 'Viridis (secuencial, apta para daltonismo)', c: ['#440154', '#414487', '#2A788E', '#22A884', '#7AD151', '#FDE725'] },
+  pastel: { name: 'Pastel', c: ['#A6CEE3', '#B2DF8A', '#FB9A99', '#FDBF6F', '#CAB2D6', '#FFFF99'] },
+  custom: { name: 'Personalizada (elija sus 6 colores)', c: ['#00729E', '#8E8E8E', '#B0C7D3', '#8B2E3B', '#326A82', '#4D4D4D'] },
 };

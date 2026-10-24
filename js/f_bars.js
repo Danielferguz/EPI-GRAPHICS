@@ -1,5 +1,5 @@
 // Barras con corchetes de comparación (estilo NEJM: porcentaje de pacientes por grupo, OR/RR y valor p sobre los corchetes).
-import { T, L, R, esc, num, fmt, minus, textW, wrap, lines, niceTicks, tickLabel, fmtTicks, svgRoot, INK, FRAME } from './svg.js?v=2026.10.22-1';
+import { T, L, R, esc, num, fmt, minus, textW, wrap, lines, niceTicks, tickLabel, fmtTicks, svgRoot, INK, FRAME } from './svg.js?v=2026.10.24-2';
 
 const A = (id, o = {}) => ({ id, ...o });
 export const bars = {

@@ -11,7 +11,22 @@ export const HELP_HTML = `
 <tr><td><b>Kaplan-Meier</b></td><td>Supervivencia o incidencia acumulada desde datos individuales, con IC, censuras y número en riesgo</td><td>Base con tiempo, evento y grupo (CSV/Excel)</td></tr>
 <tr><td><b>Diagrama CONSORT</b></td><td>Flujo de participantes con exclusiones y brazos</td><td>Texto: una línea por cuadro, <code>&gt;</code> para exclusiones, <code>=== Brazo</code> para dividir</td></tr>
 <tr><td><b>Esquema del diseño</b></td><td>Fases, aleatorización, brazos, seguimiento y línea de tiempo</td><td>Fases, brazos (texto y color), marcas de tiempo</td></tr>
-<tr><td><b>Barras apiladas</b></td><td>Distribución de una escala ordinal (mRS, Likert, estadios) por grupo</td><td>Categorías, y valores por grupo y categoría</td></tr></tbody></table>
+<tr><td><b>Barras apiladas</b></td><td>Distribución de una escala ordinal (mRS, Likert, estadios) por grupo</td><td>Categorías, y valores por grupo y categoría</td></tr>
+<tr><td><b>Distribuciones</b></td><td>Caja, violín, nube de lluvia, puntos con IC, histograma, densidad y crestas por grupo, con n, media y valor P</td><td>Grupo y valor por observación</td></tr>
+<tr><td><b>Dispersión y regresión</b></td><td>Relación entre dos variables con recta y banda de IC 95 %, LOESS, r, burbujas y ejes logarítmicos</td><td>X, Y, grupo, tamaño, etiqueta</td></tr>
+<tr><td><b>Ranking y antes–después</b></td><td>Mancuerna, piruleta, barras y pendientes con columnas de valores y diferencia</td><td>Categoría, valor 1, valor 2</td></tr>
+<tr><td><b>Evolución temporal</b></td><td>Líneas, áreas, áreas apiladas y curva epidémica con fechas ISO y eventos marcados</td><td>Fecha, grupo y valor</td></tr>
+<tr><td><b>Partes de un todo</b></td><td>Anillo, pastel, waffle de 100 cuadros y treemap</td><td>Categoría y valor</td></tr>
+<tr><td><b>Radar</b></td><td>Perfil de varias dimensiones por grupo</td><td>Eje, serie y valor</td></tr>
+<tr><td><b>Bland-Altman</b></td><td>Concordancia entre dos métodos: sesgo y límites de acuerdo con IC</td><td>Pares de mediciones</td></tr>
+<tr><td><b>Embudo y volcán</b></td><td>Sesgo de publicación con prueba de Egger; volcán de efecto frente a −log10 P</td><td>Efecto y error estándar, o efecto y P</td></tr>
+<tr><td><b>Mapa de calor y correlograma</b></td><td>Matriz de valores o correlaciones de Pearson desde una base, con escalas secuenciales y divergentes</td><td>Fila, columna y valor, o una base CSV/Excel</td></tr>
+<tr><td><b>Flujo de pacientes (Sankey)</b></td><td>Trayectorias entre etapas con bandas proporcionales</td><td>Nodo en cada etapa y N por trayectoria</td></tr>
+<tr><td><b>Figura compuesta</b></td><td>Reúne varias plantillas en una cuadrícula con letras A, B, C… y separadores</td><td>Qué plantilla va en cada panel y cuántas columnas ocupa</td></tr></tbody></table>
+<h3>Tamaño de letra y colores</h3>
+<p><b>A− / A+</b> (sobre la vista previa) cambian en 0,5 pt el tamaño de <i>todo</i> el texto de la figura; el rango útil para revistas es 6–9 pt a ancho final. En <b>Formato</b> puede elegir entre paletas (NEJM, EPI-LAB, Lancet, JAMA, Nature, Tableau, Set2, Viridis, Okabe-Ito para daltonismo, grises) o crear una <b>personalizada</b> de 6 colores. Cada serie, grupo o barra admite además su propio color en las tablas.</p>
+<h3>Ideas de la galería data-to-viz</h3>
+<p>Las plantillas nuevas siguen el árbol de decisión de <a href="https://www.data-to-viz.com">data-to-viz</a> (distribución, correlación, ranking, evolución, partes de un todo, flujo) con las convenciones de revista de este módulo. Evite los gráficos de pastel para comparar más de cinco categorías y los de barras con solo la media para variables continuas: muestre la distribución.</p>
 <h3>Recomendaciones para figuras de revista</h3>
 <ul><li>Use una sola familia tipográfica sans-serif (Arial/Helvetica) y letra de 6–8 pt al tamaño final.</li><li>Entregue la figura en el ancho final (85, 120 o 174 mm) y evite reescalarla después: así la letra mantiene su tamaño.</li><li>Prefiera SVG (o PDF vectorial) para gráficos de líneas; use ≥ 600 dpi en PNG/TIFF si la revista pide mapa de bits.</li><li>No dependa solo del color: combine marcadores distintos (cuadrado, triángulo) y la paleta «apta para daltonismo» si lo necesita.</li><li>En forest plots reporte el número de pacientes por brazo, la medida (HR, RR, diferencia) y el IC; en curvas, el número en riesgo.</li><li>Verifique siempre las instrucciones de autores de su revista: los anchos, la fuente y los formatos pueden cambiar.</li></ul>
 <h3>Escalas del forest plot</h3>

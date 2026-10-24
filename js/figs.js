@@ -1,5 +1,5 @@
 // Exportación de figuras para revistas: SVG vectorial, PNG y TIFF con DPI incrustado, ancho en mm, fondo blanco y fuente elegida.
-import { U_PER_MM } from './svg.js?v=2026.10.22-1';
+import { U_PER_MM } from './svg.js?v=2026.10.24-2';
 export const WIDTHS = { single: 85, onehalf: 120, double: 174 };
 export const FONTS = { arial: 'Arial, Helvetica, sans-serif', helvetica: 'Helvetica, Arial, sans-serif', times: '"Times New Roman", Times, serif' };
 export const widthMM = st => (st.widthKey === 'custom' ? Math.max(40, +st.mm || 174) : WIDTHS[st.widthKey] || 174);

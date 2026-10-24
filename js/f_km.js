@@ -1,8 +1,8 @@
 // Kaplan-Meier desde datos individuales (tiempo, evento, grupo): supervivencia o incidencia acumulada, IC, marcas de censura y número en riesgo.
-import { drawCurves } from './f_curves.js?v=2026.10.22-1';
-import { km, logrank } from './models.js?v=2026.10.22-1';
-import { rng } from './dist.js?v=2026.10.22-1';
-import { T, svgRoot, num, fmt } from './svg.js?v=2026.10.22-1';
+import { drawCurves } from './f_curves.js?v=2026.10.24-2';
+import { km, logrank } from './models.js?v=2026.10.24-2';
+import { rng } from './dist.js?v=2026.10.24-2';
+import { T, svgRoot, num, fmt } from './svg.js?v=2026.10.24-2';
 
 export function exampleRows() {
   const r = rng(11), rows = [];
@@ -26,6 +26,7 @@ export const km_ = {
     { k: 'title', label: 'Título', type: 'text', def: 'Kidney Failure' }, { k: 'ylab', label: 'Título eje Y', type: 'text', def: 'Probability of Kidney-Failure–free Survival' }, { k: 'xlab', label: 'Título eje X', type: 'text', def: 'Months' },
     { k: 'note', label: 'Texto dentro del gráfico (| = salto de línea)', type: 'text', def: 'Hazard ratio, 0.58 (95% CI, 0.44–0.77)|P<0.001' }, { k: 'notePos', label: 'Posición del texto', type: 'select', opts: [['bl', 'Abajo izquierda'], ['br', 'Abajo derecha'], ['tl', 'Arriba izquierda'], ['tr', 'Arriba derecha']], def: 'bl' },
     { k: 'aspect', label: 'Altura del gráfico (proporción del ancho)', type: 'number', def: 0.55, step: 0.05 },
+    { k: 'inset', label: 'Recuadro ampliado (zoom de una zona de la curva)', type: 'check', def: false }, { k: 'insetYmin', label: 'Recuadro: Y mínimo', type: 'number', def: 0 }, { k: 'insetYmax', label: 'Recuadro: Y máximo', type: 'number', def: 12 }, { k: 'insetXmax', label: 'Recuadro: X máximo (vacío = el del gráfico)', type: 'number', def: '' },
   ],
   tables: [{ k: 'groups', label: 'Grupos (nombre en la leyenda y color)', help: 'Se rellena al elegir la variable de grupo; cambie el nombre o el color si lo desea.', cols: [{ k: 'value', label: 'Valor en la base', type: 'text', w: 140 }, { k: 'label', label: 'Nombre en la figura', type: 'text', w: 180 }, { k: 'color', label: 'Color', type: 'color', w: 90 }] }],
   example() { return { settings: { time: 'months', status: 'kidney_failure', event: '1', group: 'arm' }, tables: { groups: [] }, data: { name: 'ejemplo simulado', rows: exampleRows() } }; },
@@ -61,6 +62,7 @@ export const km_ = {
     // leyenda interna: nombre de cada grupo junto a su curva (por la derecha)
     series.forEach(s => { if (s.name) { s.labelPos = 'right'; } });
     const panel = { id: S.letter || '', title: S.title, ylab: S.ylab, ymin: 0, ymax: sc, ystep: sc / 5, xlab: S.xlab, xticks: ticks, xmin: 0, xmax, ref: NaN, series, risk: S.risk ? risk : [], riskTitle: 'No. at Risk', note: S.note ? { text: S.note, pos: S.notePos } : null };
+    if (S.inset) panel.inset = { x: [0, isFinite(num(S.insetXmax)) ? num(S.insetXmax) : xmax], y: [+S.insetYmin || 0, +S.insetYmax || 10], box: [0.24, 0.06, 0.97, 0.58] };
     return drawCurves([panel], o, { aspect: +S.aspect });
   },
 };

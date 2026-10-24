@@ -1,20 +1,31 @@
 // EPI-GRAPHICS · interfaz: galería de plantillas, editor de tablas, vista previa en vivo, formato y exportación.
-import { bars } from './f_bars.js?v=2026.10.22-1';
-import { forest } from './f_forest.js?v=2026.10.22-1';
-import { curves } from './f_curves.js?v=2026.10.22-1';
-import { kmFig } from './f_km.js?v=2026.10.22-1';
-import { flow } from './f_flow.js?v=2026.10.22-1';
-import { schema } from './f_schema.js?v=2026.10.22-1';
-import { stacked } from './f_stacked.js?v=2026.10.22-1';
-import { PALETTES, U_PER_MM, PT, esc } from './svg.js?v=2026.10.22-1';
-import { exportFigure, printFigure, widthMM, save } from './figs.js?v=2026.10.22-1';
-import { readFile, parseCSV, toCSV, download } from './io.js?v=2026.10.22-1';
-import { HELP_HTML } from './help.js?v=2026.10.22-1';
+import { bars } from './f_bars.js?v=2026.10.24-2';
+import { forest } from './f_forest.js?v=2026.10.24-2';
+import { curves } from './f_curves.js?v=2026.10.24-2';
+import { kmFig } from './f_km.js?v=2026.10.24-2';
+import { flow } from './f_flow.js?v=2026.10.24-2';
+import { schema } from './f_schema.js?v=2026.10.24-2';
+import { stacked } from './f_stacked.js?v=2026.10.24-2';
+import { dist } from './f_dist.js?v=2026.10.24-2';
+import { scatter } from './f_scatter.js?v=2026.10.24-2';
+import { rank } from './f_rank.js?v=2026.10.24-2';
+import { time } from './f_time.js?v=2026.10.24-2';
+import { part } from './f_part.js?v=2026.10.24-2';
+import { radar } from './f_radar.js?v=2026.10.24-2';
+import { ba } from './f_ba.js?v=2026.10.24-2';
+import { meta } from './f_meta.js?v=2026.10.24-2';
+import { heat } from './f_heat.js?v=2026.10.24-2';
+import { sankey } from './f_sankey.js?v=2026.10.24-2';
+import { compose } from './f_compose.js?v=2026.10.24-2';
+import { PALETTES, U_PER_MM, PT, esc } from './svg.js?v=2026.10.24-2';
+import { exportFigure, printFigure, widthMM, save } from './figs.js?v=2026.10.24-2';
+import { readFile, parseCSV, toCSV, download } from './io.js?v=2026.10.24-2';
+import { HELP_HTML } from './help.js?v=2026.10.24-2';
 
-const TYPES = [bars, forest, curves, kmFig, flow, schema, stacked], $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const TYPES = [bars, forest, curves, kmFig, flow, schema, stacked, dist, scatter, rank, time, part, radar, ba, meta, heat, sankey, compose], $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const clone = o => JSON.parse(JSON.stringify(o));
 const STORE = 'epi-graphics-v1';
-const style = { widthKey: 'double', mm: 174, dpi: 600, font: 'arial', pt: 8, pal: 'nejm', frame: true };
+const style = { widthKey: 'double', mm: 174, dpi: 600, font: 'arial', pt: 8, pal: 'nejm', frame: true, custom: ['#00729E', '#8E8E8E', '#B0C7D3', '#8B2E3B', '#326A82', '#4D4D4D'] };
 const figs = {}; let cur = 'bars';
 
 const initState = m => { const ex = m.example(), settings = {}; m.settings.forEach(s => (settings[s.k] = s.def)); return { settings: { ...settings, ...clone(ex.settings) }, tables: clone(ex.tables), data: ex.data ? clone(ex.data) : null }; };
@@ -44,8 +55,11 @@ $$('.tabs button').forEach(b => b.addEventListener('click', () => showTab(b.data
 document.addEventListener('click', e => { const g = e.target.closest('[data-go]'); if (g) showTab(g.dataset.go); });
 
 // ---------- dibujo ----------
-function renderSVG(m = mod(), st = stOf(m.id), W = null) {
-  const o = { W: W || widthMM(style) * U_PER_MM, fs: style.pt * PT, pal: PALETTES[style.pal].c, line: PALETTES[style.pal].line || PALETTES[style.pal].c, frame: style.frame };
+function renderSVG(m = mod(), st = stOf(m.id), W = null, extra = {}) {
+  if (m.id === 'custom') return '';
+  const pal = PALETTES[style.pal] || PALETTES.nejm, cs = style.pal === 'custom' ? style.custom : null;
+  const o = { W: W || widthMM(style) * U_PER_MM, fs: style.pt * PT, pal: cs || pal.c, line: cs || pal.line || pal.c, frame: style.frame, ...extra };
+  if (m.composite) o.sub = (id, w, letter) => { const m2 = TYPES.find(t => t.id === id); if (!m2 || m2.composite) return ''; try { const st2 = stOf(id); m2.sync?.(st2); return renderSVG(m2, st2, w, { frame: false, panelId: letter }); } catch (e) { console.error(e); return ''; } };
   return m.render(st, o);
 }
 function refresh(save_ = true) {
@@ -157,7 +171,9 @@ function bindStyle() {
   $('#fig-pal').innerHTML = Object.entries(PALETTES).map(([k, p]) => `<option value="${k}">${esc(p.name)}</option>`).join('');
   const set = () => { $('#fig-width').value = style.widthKey; $('#fig-mm').value = style.mm; $('#fig-dpi').value = style.dpi; $('#fig-font').value = style.font; $('#fig-pt').value = style.pt; $('#fig-pal').value = style.pal; $('#fig-frame').checked = style.frame; $('#fig-mm').disabled = style.widthKey !== 'custom'; };
   set();
-  const upd = () => { Object.assign(style, { widthKey: $('#fig-width').value, mm: +$('#fig-mm').value || 174, dpi: +$('#fig-dpi').value, font: $('#fig-font').value, pt: +$('#fig-pt').value || 8, pal: $('#fig-pal').value, frame: $('#fig-frame').checked }); $('#fig-mm').disabled = style.widthKey !== 'custom'; later(); };
+  const clampPt = v => Math.min(16, Math.max(4, Math.round(v * 2) / 2)), fz = d => { style.pt = clampPt(style.pt + d); $('#fig-pt').value = style.pt; later(); drawPal(); }, drawPal = () => { const pal = PALETTES[style.pal] || PALETTES.nejm, cs = style.pal === 'custom' ? style.custom : pal.c; $('#fz-v').textContent = `${style.pt} pt`; $('#pal-sw').innerHTML = cs.map(c => `<i style="background:${c}" title="${c}"></i>`).join(''); const ce = $('#pal-custom'); ce.hidden = style.pal !== 'custom'; if (!ce.hidden) { ce.innerHTML = style.custom.map((c, i) => `<input type="color" data-ci="${i}" value="${c}" aria-label="Color ${i + 1}">`).join(''); $$('[data-ci]', ce).forEach(el => el.addEventListener('input', () => { style.custom[+el.dataset.ci] = el.value; drawPal(); later(); })); } };
+  $('#fz-m').addEventListener('click', () => fz(-0.5)); $('#fz-p').addEventListener('click', () => fz(0.5)); drawPal();
+  const upd = () => { Object.assign(style, { widthKey: $('#fig-width').value, mm: +$('#fig-mm').value || 174, dpi: +$('#fig-dpi').value, font: $('#fig-font').value, pt: +$('#fig-pt').value || 8, pal: $('#fig-pal').value, frame: $('#fig-frame').checked }); $('#fig-mm').disabled = style.widthKey !== 'custom'; drawPal(); later(); };
   ['fig-width', 'fig-mm', 'fig-dpi', 'fig-font', 'fig-pt', 'fig-pal', 'fig-frame'].forEach(id => $(`#${id}`).addEventListener('input', upd));
   document.addEventListener('click', async e => {
     const b = e.target.closest('[data-dl]'); if (!b) return;
@@ -168,7 +184,7 @@ function bindStyle() {
   $('#dl-pdf').addEventListener('click', () => { try { printFigure($('#pv-out svg'), style); } catch (err) { alert(err.message); } });
   $('#ed-reset').addEventListener('click', () => { if (confirm('¿Restaurar el ejemplo de esta plantilla? Se perderán los cambios de este tipo de figura.')) { figs[cur] = initState(mod()); buildEditor(); refresh(); } });
   $('#pj-save').addEventListener('click', () => save('epi-graphics-proyecto.json', new Blob([JSON.stringify({ app: 'EPI-GRAPHICS', version: '2026.10.22-1', style, figs, cur }, null, 1)], { type: 'application/json' })));
-  $('#pj-open').addEventListener('change', async e => { const f = e.target.files[0]; if (!f) return; try { const o = JSON.parse(await f.text()); if (o.app !== 'EPI-GRAPHICS') throw new Error('No es un proyecto de EPI-GRAPHICS.'); restore(o); set(); buildGallery(); buildEditor(); refresh(); } catch (err) { alert(`No se pudo abrir: ${err.message}`); } e.target.value = ''; });
+  $('#pj-open').addEventListener('change', async e => { const f = e.target.files[0]; if (!f) return; try { const o = JSON.parse(await f.text()); if (o.app !== 'EPI-GRAPHICS') throw new Error('No es un proyecto de EPI-GRAPHICS.'); restore(o); set(); drawPal(); buildGallery(); buildEditor(); refresh(); } catch (err) { alert(`No se pudo abrir: ${err.message}`); } e.target.value = ''; });
   // botones de descarga rápida bajo la vista previa
   $('#preview').insertAdjacentHTML('beforeend', '<div class="figbar"><span>Descargar:</span><button type="button" data-dl="svg">SVG</button><button type="button" data-dl="png">PNG</button><button type="button" data-dl="tiff">TIFF</button></div>');
 }

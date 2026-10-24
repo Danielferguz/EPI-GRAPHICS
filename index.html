@@ -7,7 +7,7 @@
 <meta name="description" content="EPI-GRAPHICS (EPI-LAB): figuras listas para revistas en el estilo del NEJM. Barras con comparaciones, forest plots por subgrupos, curvas con número en riesgo, Kaplan-Meier, diagramas CONSORT y esquemas de diseño. Exporta SVG, PNG y TIFF con DPI y ancho de columna.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap">
-<link rel="stylesheet" href="css/style.css?v=2026.10.22-1">
+<link rel="stylesheet" href="css/style.css?v=2026.10.24-2">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
 </head>
 <body>
@@ -53,6 +53,7 @@
         <label>Fuente <select id="fig-font"><option value="arial">Arial</option><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option></select></label>
         <label>Tamaño de letra (pt) <input id="fig-pt" type="number" min="5" max="14" step="0.5" value="8"></label>
         <label>Paleta de colores <select id="fig-pal"></select></label>
+        <div class="wide" id="pal-wrap"><div id="pal-sw" class="swatches"></div><div id="pal-custom" class="swatches edit" hidden></div></div>
         <label class="inline"><input type="checkbox" id="fig-frame" checked> Marco gris (estilo NEJM)</label>
       </div>
       <div id="fig-info" class="explain"></div>
@@ -72,14 +73,14 @@
 </section>
 
 <aside id="preview" class="card pv" hidden>
-  <div class="row between wrap gap"><h2>Vista previa</h2><span id="pv-size" class="sub"></span></div>
+  <div class="row between wrap gap"><h2>Vista previa</h2><div class="fz" role="group" aria-label="Tamaño de letra"><button type="button" id="fz-m" title="Reducir la letra de toda la figura (−0,5 pt)">A−</button><b id="fz-v">8 pt</b><button type="button" id="fz-p" title="Aumentar la letra de toda la figura (+0,5 pt)">A+</button></div><span id="pv-size" class="sub"></span></div>
   <div id="pv-out" class="pvbox"></div>
   <div id="pv-err" class="err" hidden></div>
 </aside>
 
 <section id="tab-ayuda" class="tab"><div class="card prose" id="help"></div></section>
 </main>
-<footer class="foot">EPI-GRAPHICS · un módulo de EPI-LAB · © Daniel Fernández-Guzmán · CC BY-NC-ND 4.0 · Todo se dibuja en su navegador; ningún dato se envía a servidores. · v2026.10.22-1</footer>
-<script type="module" src="js/app.js?v=2026.10.22-1"></script>
+<footer class="foot">EPI-GRAPHICS · un módulo de EPI-LAB · © Daniel Fernández-Guzmán · CC BY-NC-ND 4.0 · Todo se dibuja en su navegador; ningún dato se envía a servidores. · v2026.10.24-2</footer>
+<script type="module" src="js/app.js?v=2026.10.24-2"></script>
 </body>
 </html>
