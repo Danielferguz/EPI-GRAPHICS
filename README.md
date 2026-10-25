@@ -29,7 +29,7 @@ Todo se dibuja en el navegador: los datos no salen de tu computadora. Sitio est�
 | **Flujo de pacientes (Sankey)** | Trayectorias entre etapas | nodos por etapa y N |
 | **Figura compuesta** | Varias plantillas en una sola figura con letras de panel | plantilla y columnas por panel |
 
-Cada plantilla trae un ejemplo con **datos simulados de nefrología**. Las tablas admiten «Pegar desde Excel», importar/exportar CSV y guardar/abrir el proyecto completo (`.json`).
+Cada plantilla trae un ejemplo base y **varias variantes** (`js/variants.js`, 77 ejemplos en total) con **datos simulados de nefrología**; el forest admite hasta cuatro columnas de texto extra con título agrupado, y cada figura puede tener su propia paleta. Las tablas admiten «Pegar desde Excel», importar/exportar CSV y guardar/abrir el proyecto completo (`.json`).
 
 ## Formato de salida
 
@@ -42,7 +42,7 @@ Cada plantilla trae un ejemplo con **datos simulados de nefrología**. Las tabla
 
 ```bash
 python3 -m http.server 8000   # luego http://localhost:8000
-node tests/validate.mjs       # 209 comprobaciones: humo de las 18 plantillas y estadísticos frente a numpy/scipy/statsmodels
+node tests/validate.mjs       # 347 comprobaciones: humo de las 18 plantillas y de todas sus variantes y estadísticos frente a numpy/scipy/statsmodels
 ```
 
 ## Estructura

@@ -1,7 +1,7 @@
 // Forest plot por subgrupos / desenlaces (estilo NEJM): etiquetas, n por brazo, estimador con IC, texto a la derecha y flechas «mejor».
-import { T, L, R, arrow, num, fmt, minus, textW, wrap, tickLabel, fmtTicks, niceTicks, makeScale, svgRoot, INK, FRAME, ZEBRA } from './svg.js?v=2026.10.24-2';
+import { T, L, R, arrow, num, fmt, minus, textW, wrap, tickLabel, fmtTicks, niceTicks, makeScale, svgRoot, INK, FRAME, ZEBRA } from './svg.js?v=2026.10.25-1';
 
-const row = (panel, label, n1, n2, est, lo, hi, kind = '') => ({ panel, label, n1, n2, est, lo, hi, kind });
+const row = (panel, label, n1, n2, est, lo, hi, kind = '', x = {}) => ({ panel, label, n1, n2, est, lo, hi, kind, c1: '', c2: '', c3: '', c4: '', ...x });
 export const forest = {
   id: 'forest', name: 'Forest plot por subgrupos', short: 'Forest',
   desc: 'Estimador (IC 95 %) por subgrupo con n por brazo, línea de referencia, escala lineal/log y flechas «a favor de…». Uno o varios paneles.',
@@ -16,10 +16,11 @@ export const forest = {
       { k: 'id', label: 'Panel', type: 'text', w: 50 }, { k: 'title', label: 'Título', type: 'text', w: 230 }, { k: 'h0', label: 'Encabezado de etiquetas', type: 'text', w: 120 }, { k: 'h1', label: 'Encabezado n1', type: 'text', w: 100 }, { k: 'h2', label: 'Encabezado n2', type: 'text', w: 100 },
       { k: 'hn', label: 'Subtítulo de n', type: 'text', w: 100 }, { k: 'hm', label: 'Encabezado de la medida', type: 'text', w: 230 }, { k: 'ref', label: 'Referencia', type: 'num', w: 70 },
       { k: 'scale', label: 'Escala', type: 'select', opts: ['linear', 'log', 'ticks'], w: 80 }, { k: 'ticks', label: 'Marcas del eje', type: 'text', w: 170 },
+      { k: 'cg', label: 'Título agrupado de columnas extra', type: 'text', w: 130 }, { k: 'cg1', label: 'Título agrupado desde la columna extra (1–4)', type: 'num', w: 80 }, { k: 'cg2', label: 'hasta la columna extra (1–4)', type: 'num', w: 80 }, { k: 'cu', label: 'Subtítulo (unidad) de columnas extra', type: 'text', w: 110 }, { k: 'c1', label: 'Título columna extra 1', type: 'text', w: 100 }, { k: 'c2', label: 'Título columna extra 2', type: 'text', w: 100 }, { k: 'c3', label: 'Título columna extra 3', type: 'text', w: 100 }, { k: 'c4', label: 'Título columna extra 4', type: 'text', w: 100 },
       { k: 'left', label: 'Flecha izquierda', type: 'text', w: 130 }, { k: 'right', label: 'Flecha derecha', type: 'text', w: 130 }, { k: 'dec', label: 'Decimales', type: 'num', w: 70 }, { k: 'sep', label: 'Separador del IC', type: 'text', w: 70 }] },
-    { k: 'rows', label: 'Filas', help: 'Tipo «h» = encabezado de grupo (sin marcador). Deje n1/n2 vacíos si no desea mostrarlos.', cols: [
+    { k: 'rows', label: 'Filas', help: 'Tipo «h» = encabezado de grupo (sin marcador). Deje n1/n2 vacíos si no desea mostrarlos. Las columnas «Extra 1–4» muestran cualquier texto (n, %, medias, pesos…) entre las columnas de n y el gráfico; su título se escribe en el panel.', cols: [
       { k: 'panel', label: 'Panel', type: 'text', w: 50 }, { k: 'label', label: 'Etiqueta', type: 'text', w: 250 }, { k: 'n1', label: 'n brazo 1', type: 'text', w: 70 }, { k: 'n2', label: 'n brazo 2', type: 'text', w: 70 },
-      { k: 'est', label: 'Estimador', type: 'num', w: 80 }, { k: 'lo', label: 'IC inf.', type: 'num', w: 80 }, { k: 'hi', label: 'IC sup.', type: 'num', w: 80 }, { k: 'kind', label: 'Tipo', type: 'select', opts: ['', 'h'], w: 60 }] },
+      { k: 'est', label: 'Estimador', type: 'num', w: 80 }, { k: 'lo', label: 'IC inf.', type: 'num', w: 80 }, { k: 'hi', label: 'IC sup.', type: 'num', w: 80 }, { k: 'c1', label: 'Extra 1', type: 'text', w: 90 }, { k: 'c2', label: 'Extra 2', type: 'text', w: 90 }, { k: 'c3', label: 'Extra 3', type: 'text', w: 90 }, { k: 'c4', label: 'Extra 4', type: 'text', w: 90 }, { k: 'kind', label: 'Tipo', type: 'select', opts: ['', 'h'], w: 60 }] },
   ],
   example() {
     return {
@@ -56,15 +57,28 @@ export const forest = {
       const c1 = hasN ? Math.max(textW(p.h1 || '', fs, true), ...rows.map(r => textW(String(r.n1 ?? ''), fs)), 10) + fs * 1.2 : 0;
       const c2 = hasN ? Math.max(textW(p.h2 || '', fs, true), ...rows.map(r => textW(String(r.n2 ?? ''), fs)), 10) + fs * 1.2 : 0;
       const tW = S.ci ? Math.max(...rows.map(r => textW(estTxt(r), fs)), 10) : 0;
-      const xLab = pad, xN1 = xLab + labW + fs * 1.0 + c1 / 2, xN2 = xLab + labW + fs * 1.0 + c1 + c2 / 2;
-      const xp0 = xLab + labW + fs * 1.0 + c1 + c2 + fs * 1.5, xp1 = W - pad - tW - fs * 1.8;
+      // columnas extra (texto libre): ancho según contenido; se centran bajo su título
+      const ex = ['c1', 'c2', 'c3', 'c4'].filter(k => String(p[k] ?? '').trim() || rows.some(r => String(r[k] ?? '') !== '')), exW = ex.map(k => Math.max(textW(p[k] || '', fs, true), ...rows.map(r => textW(String(r[k] ?? ''), fs)), 10) + fs * 1.3);
+      const xLab = pad, xN1 = xLab + labW + fs * 1.0 + c1 / 2, xN2 = xLab + labW + fs * 1.0 + c1 + c2 / 2, xE0 = xLab + labW + fs * 1.0 + c1 + c2;
+      const xE = []; { let a = xE0; exW.forEach(w => { xE.push(a + w / 2); a += w; }); }
+      const xp0 = xE0 + exW.reduce((a, b) => a + b, 0) + fs * 1.5, xp1 = W - pad - tW - fs * 1.8;
       const sc = makeScale(kind, ticks, x0v, x1v, xp0 + fs * 0.5, xp1 - fs * 0.5);
       const rh = fs * S.rowH, tl = wrap(String(p.title ?? ''), W - pad * 2 - fs * 1.8, fs, true);
       const hdr1 = y + fs * 1.55, titleH = Math.max(1, tl.length) * fs * lh + fs * 0.9;
-      const hy = y + titleH + fs * 1.1, headH = fs * 2.7, top = y + titleH + headH;
+      const cgOn = !!String(p.cg ?? '').trim() && ex.length > 0, hy = y + titleH + fs * 1.1 + (cgOn ? fs * 1.1 : 0), headH = fs * 2.7 + (cgOn ? fs * 1.1 : 0), top = y + titleH + headH;
       body += T(pad, hdr1, String(p.id ?? ''), { fs: fs * 1.3, bold: true }) + T(pad + (p.id ? fs * 1.9 : 0), y + fs * 1.5, tl, { fs, bold: true });
       body += T(xLab, hy + fs * 0.6, p.h0 || '', { fs, bold: true });
       if (hasN) { body += T(xN1, hy - fs * 0.1, p.h1 || '', { fs, bold: true, anchor: 'middle' }) + T(xN2, hy - fs * 0.1, p.h2 || '', { fs, bold: true, anchor: 'middle' }); if (p.hn) body += T((xN1 + xN2) / 2, hy + fs * 1.35, p.hn, { fs, italic: true, anchor: 'middle' }); }
+      if (ex.length) {
+        ex.forEach((k, j) => { body += T(xE[j], hy - fs * 0.1 + (cgOn ? 0 : fs * 0.7), p[k] || '', { fs, bold: true, anchor: 'middle' }); });
+        // el título agrupado y la unidad abarcan solo las columnas indicadas (por defecto todas)
+        const n1 = isFinite(num(p.cg1)) ? num(p.cg1) : 1, n2 = isFinite(num(p.cg2)) ? num(p.cg2) : 4, js = ex.map((k, j) => j).filter(j => +ex[j].slice(1) >= n1 && +ex[j].slice(1) <= n2);
+        if (js.length) {
+          const a = js[0], z = js[js.length - 1], xa = xE[a] - exW[a] / 2 + fs * 0.3, xz = xE[z] + exW[z] / 2 - fs * 0.3;
+          if (cgOn) body += T((xa + xz) / 2, hy - fs * 1.2, p.cg, { fs, bold: true, anchor: 'middle' }) + L(xa, hy - fs * 0.85, xz, hy - fs * 0.85, { w: 1 });
+          if (p.cu) body += T((xE[a] + xE[z]) / 2, hy + fs * 1.35, p.cu, { fs, italic: true, anchor: 'middle' });
+        }
+      }
       if (p.hm) body += T((xp0 + W - pad) / 2, hy + fs * 0.6, p.hm, { fs, bold: true, anchor: 'middle' });
       rows.forEach((r, i) => {
         const yy = top + i * rh;
@@ -77,6 +91,7 @@ export const forest = {
         body += T(xLab, base, r.label ?? '', { fs, bold: h });
         if (h) return;
         if (hasN) body += T(xN1, base, String(r.n1 ?? ''), { fs, anchor: 'middle' }) + T(xN2, base, String(r.n2 ?? ''), { fs, anchor: 'middle' });
+        ex.forEach((k, j) => { if (String(r[k] ?? '') !== '') body += T(xE[j], base, String(r[k]), { fs, anchor: 'middle' }); });
         const e = num(r.est), a = num(r.lo), b = num(r.hi);
         if (isFinite(e)) {
           const xa = isFinite(a) ? Math.max(a, x0v - (x1v - x0v) * 0.04) : e, xb = isFinite(b) ? Math.min(b, x1v + (x1v - x0v) * 0.04) : e;

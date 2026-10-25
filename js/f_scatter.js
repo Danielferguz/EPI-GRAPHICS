@@ -1,6 +1,6 @@
 // Dispersión: puntos (con burbujas opcionales), recta con banda de confianza o curva LOESS, estadísticos y línea de identidad.
-import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, lineOf, rowsOf, uniq, natural, empty, legend, minus, niceTicks, INK, FRAME } from './kit.js?v=2026.10.24-2';
-import { olsLine, loess, pearson, lcg } from './stat2.js?v=2026.10.24-2';
+import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, lineOf, rowsOf, uniq, natural, empty, legend, minus, niceTicks, INK, FRAME } from './kit.js?v=2026.10.25-1';
+import { olsLine, loess, pearson, lcg } from './stat2.js?v=2026.10.25-1';
 
 const norm = r => Math.sqrt(-2 * Math.log(r() || 1e-9)) * Math.cos(2 * Math.PI * r());
 const P_ = p => (p < 0.001 ? 'P<0.001' : `P=${p.toFixed(3).replace(/0+$/, '').replace(/\.$/, '')}`);

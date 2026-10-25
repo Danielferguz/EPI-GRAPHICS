@@ -1,5 +1,5 @@
 // Utilidades compartidas por las plantillas de gráficos: marco de un panel con ejes en L (estilo NEJM), leyenda y lectura de tablas.
-import { T, L, R, num, fmt, textW, wrap, tickLabel, fmtTicks, niceTicks, svgRoot, lum, INK, FRAME, minus } from './svg.js?v=2026.10.24-2';
+import { T, L, R, num, fmt, textW, wrap, tickLabel, fmtTicks, niceTicks, svgRoot, lum, INK, FRAME, minus } from './svg.js?v=2026.10.25-1';
 export { T, L, R, num, fmt, textW, wrap, tickLabel, fmtTicks, niceTicks, svgRoot, lum, INK, FRAME, minus };
 export const colOf = (o, i) => (o.pal || ['#326A82'])[i % (o.pal || ['x']).length];
 export const lineOf = (o, i) => (o.line || o.pal)[i % (o.line || o.pal).length];

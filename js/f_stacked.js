@@ -1,5 +1,5 @@
 // Barras apiladas horizontales (distribución de categorías ordinales, p. ej. escala mRS, Likert, estadios de ERC).
-import { T, L, R, num, fmt, textW, wrap, tickLabel, svgRoot, lum, INK, FRAME } from './svg.js?v=2026.10.24-2';
+import { T, L, R, num, fmt, textW, wrap, tickLabel, svgRoot, lum, INK, FRAME } from './svg.js?v=2026.10.25-1';
 
 export const stacked = {
   id: 'stacked', name: 'Barras apiladas (distribución ordinal)', short: 'Apiladas',

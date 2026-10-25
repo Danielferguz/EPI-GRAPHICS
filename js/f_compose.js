@@ -1,5 +1,5 @@
 // Figura compuesta: reúne varias figuras ya creadas en una cuadrícula con letras de panel (A, B, C…) y marco, como en las figuras de varios paneles de las revistas.
-import { T, L, R, num, svgRoot, rowsOf, empty, INK, FRAME } from './kit.js?v=2026.10.24-2';
+import { T, L, R, num, svgRoot, rowsOf, empty, INK, FRAME } from './kit.js?v=2026.10.25-1';
 
 export const compose = {
   id: 'compose', name: 'Figura compuesta (varios paneles)', short: 'Compuesta', composite: true,

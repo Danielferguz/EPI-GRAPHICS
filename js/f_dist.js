@@ -1,6 +1,6 @@
 // Distribuciones: caja, violín, nube de lluvia (raincloud), puntos, histograma, densidad y crestas (ridgeline).
-import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, rowsOf, uniq, natural, empty, legend, INK, FRAME, lum, sep } from './kit.js?v=2026.10.24-2';
-import { quantile, sortNum, boxStats, kde, histogram, mean, lcg } from './stat2.js?v=2026.10.24-2';
+import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, rowsOf, uniq, natural, empty, legend, INK, FRAME, lum, sep } from './kit.js?v=2026.10.25-1';
+import { quantile, sortNum, boxStats, kde, histogram, mean, lcg } from './stat2.js?v=2026.10.25-1';
 
 const norm = r => Math.sqrt(-2 * Math.log(r() || 1e-9)) * Math.cos(2 * Math.PI * r());
 const KINDS = [['box', 'Caja (Tukey)'], ['violin', 'Violín'], ['raincloud', 'Nube de lluvia (densidad + caja + puntos)'], ['points', 'Puntos con media e IC 95 %'], ['hist', 'Histograma superpuesto'], ['density', 'Densidad'], ['ridge', 'Crestas (ridgeline)']];

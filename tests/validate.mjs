@@ -6,6 +6,7 @@ import { makeScale, wrap, fmtTicks, fmt, PALETTES, U_PER_MM, PT } from '../js/sv
 import { km } from '../js/models.js';
 import { dist } from '../js/f_dist.js'; import { scatter } from '../js/f_scatter.js'; import { rank } from '../js/f_rank.js'; import { time, parseDate, dateTicks } from '../js/f_time.js'; import { part } from '../js/f_part.js';
 import { radar } from '../js/f_radar.js'; import { ba } from '../js/f_ba.js'; import { meta } from '../js/f_meta.js'; import { heat, ramp } from '../js/f_heat.js'; import { sankey } from '../js/f_sankey.js'; import { compose } from '../js/f_compose.js';
+import { VARIANTS } from '../js/variants.js';
 import * as S2 from '../js/stat2.js'; import { readFileSync } from 'node:fs';
 
 let fails = 0, checks = 0;
@@ -27,6 +28,20 @@ for (const m of ALL) {
   const empty = { settings: st.settings, tables: Object.fromEntries(m.tables.map(t => [t.k, []])), data: null };
   ok(`${m.id}: tablas vacías no fallan`, (() => { try { return m.render(empty, o).includes('<svg'); } catch (e) { console.log(e.message); return false; } })());
 }
+// variantes: cada tipo tiene al menos 2 ejemplos extra y todos se dibujan sin NaN, con el SVG cerrado y a 85/174 mm
+for (const m of ALL) {
+  const vs = VARIANTS[m.id] || []; ok(`${m.id}: al menos 2 variantes de plantilla`, vs.length >= 2, String(vs.length));
+  for (const v of vs) {
+    const e = v.make(m.example()), st = { settings: Object.fromEntries(m.settings.map(s => [s.k, s.def])), tables: e.tables, data: e.data };
+    Object.assign(st.settings, e.settings); m.sync?.(st);
+    for (const W of [85, 174]) { let svg = ''; try { svg = m.render(st, { ...o, W: W * U_PER_MM }); } catch (err) { svg = String(err); }
+      ok(`${m.id}~${v.id} ${W} mm: SVG cerrado y sin NaN`, svg.startsWith('<svg') && svg.endsWith('</svg>') && !/NaN|undefined|Infinity|Añada al menos/.test(svg), svg.slice(0, 120) + (svg.match(/.{40}(NaN|undefined|Infinity).{20}/)?.[0] || '')); }
+  }
+}
+// forest: las columnas extra (título agrupado, unidad y valores) aparecen en el SVG y ensanchan la tabla
+{ const e = VARIANTS.forest.find(v => v.id === 'columns').make(forest.example()), svg = forest.render({ settings: { zebra: true, rowH: 2.45, ci: true, mk: 'circle', ...e.settings }, tables: e.tables }, o);
+  ok('forest: columnas extra con título agrupado y subtítulo', ['Mean Change', 'Total No. of Patients (%)', 'ml/min/1.73 m²', '412 (100)', 'Placebo Better'].every(t => svg.includes(t.replace('²', '²'))));
+  const noEx = forest.render({ settings: {}, tables: forest.example().tables }, o); ok('forest: sin columnas extra no cambia el ejemplo base', !noEx.includes('Total No. of Patients')); }
 // escalas
 const lin = makeScale('linear', [], 0, 10, 100, 200); ok('escala lineal', lin(0) === 100 && lin(10) === 200 && lin(5) === 150);
 const lg = makeScale('log', [], 0.5, 2, 0, 100); ok('escala log (simétrica)', Math.abs(lg(1) - 50) < 1e-9);

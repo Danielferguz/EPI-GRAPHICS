@@ -1,6 +1,6 @@
 // Ranking y comparaciones pareadas: mancuerna (antes–después), piruleta, barras horizontales y pendientes, con columnas de valores a la derecha.
-import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, lineOf, rowsOf, empty, legend, minus, INK, FRAME, sep } from './kit.js?v=2026.10.24-2';
-import { ZEBRA } from './svg.js?v=2026.10.24-2';
+import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, lineOf, rowsOf, empty, legend, minus, INK, FRAME, sep } from './kit.js?v=2026.10.25-1';
+import { ZEBRA } from './svg.js?v=2026.10.25-1';
 
 const KINDS = [['dumbbell', 'Mancuerna (dos valores por fila)'], ['lollipop', 'Piruleta (un valor por fila)'], ['bars', 'Barras horizontales'], ['slope', 'Pendientes (antes → después)']];
 export const rank = {

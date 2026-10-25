@@ -1,5 +1,5 @@
 // Curvas con IC (barras de error o bandas), anotaciones finales y tabla «No. at Risk» (estilo NEJM).
-import { T, L, R, num, fmt, minus, textW, wrap, tickLabel, fmtTicks, niceTicks, marker, svgRoot, INK, FRAME } from './svg.js?v=2026.10.24-2';
+import { T, L, R, num, fmt, minus, textW, wrap, tickLabel, fmtTicks, niceTicks, marker, svgRoot, INK, FRAME } from './svg.js?v=2026.10.25-1';
 
 // ---- motor de dibujo compartido con Kaplan-Meier -----------------------------------------------------------------
 // panels: [{id,title,ylab,ymin,ymax,ystep,xlab,xticks,xmin,xmax,ref,riskTitle,series:[{name,color,marker,pts,step,band,censor,labelPos,endText,errbars,line}], risk:[{name,vals:[]}]}]

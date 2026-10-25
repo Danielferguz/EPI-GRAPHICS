@@ -1,26 +1,27 @@
 // EPI-GRAPHICS · interfaz: galería de plantillas, editor de tablas, vista previa en vivo, formato y exportación.
-import { bars } from './f_bars.js?v=2026.10.24-2';
-import { forest } from './f_forest.js?v=2026.10.24-2';
-import { curves } from './f_curves.js?v=2026.10.24-2';
-import { kmFig } from './f_km.js?v=2026.10.24-2';
-import { flow } from './f_flow.js?v=2026.10.24-2';
-import { schema } from './f_schema.js?v=2026.10.24-2';
-import { stacked } from './f_stacked.js?v=2026.10.24-2';
-import { dist } from './f_dist.js?v=2026.10.24-2';
-import { scatter } from './f_scatter.js?v=2026.10.24-2';
-import { rank } from './f_rank.js?v=2026.10.24-2';
-import { time } from './f_time.js?v=2026.10.24-2';
-import { part } from './f_part.js?v=2026.10.24-2';
-import { radar } from './f_radar.js?v=2026.10.24-2';
-import { ba } from './f_ba.js?v=2026.10.24-2';
-import { meta } from './f_meta.js?v=2026.10.24-2';
-import { heat } from './f_heat.js?v=2026.10.24-2';
-import { sankey } from './f_sankey.js?v=2026.10.24-2';
-import { compose } from './f_compose.js?v=2026.10.24-2';
-import { PALETTES, U_PER_MM, PT, esc } from './svg.js?v=2026.10.24-2';
-import { exportFigure, printFigure, widthMM, save } from './figs.js?v=2026.10.24-2';
-import { readFile, parseCSV, toCSV, download } from './io.js?v=2026.10.24-2';
-import { HELP_HTML } from './help.js?v=2026.10.24-2';
+import { bars } from './f_bars.js?v=2026.10.25-1';
+import { forest } from './f_forest.js?v=2026.10.25-1';
+import { curves } from './f_curves.js?v=2026.10.25-1';
+import { kmFig } from './f_km.js?v=2026.10.25-1';
+import { flow } from './f_flow.js?v=2026.10.25-1';
+import { schema } from './f_schema.js?v=2026.10.25-1';
+import { stacked } from './f_stacked.js?v=2026.10.25-1';
+import { dist } from './f_dist.js?v=2026.10.25-1';
+import { scatter } from './f_scatter.js?v=2026.10.25-1';
+import { rank } from './f_rank.js?v=2026.10.25-1';
+import { time } from './f_time.js?v=2026.10.25-1';
+import { part } from './f_part.js?v=2026.10.25-1';
+import { radar } from './f_radar.js?v=2026.10.25-1';
+import { ba } from './f_ba.js?v=2026.10.25-1';
+import { meta } from './f_meta.js?v=2026.10.25-1';
+import { heat } from './f_heat.js?v=2026.10.25-1';
+import { sankey } from './f_sankey.js?v=2026.10.25-1';
+import { compose } from './f_compose.js?v=2026.10.25-1';
+import { PALETTES, U_PER_MM, PT, esc } from './svg.js?v=2026.10.25-1';
+import { exportFigure, printFigure, widthMM, save } from './figs.js?v=2026.10.25-1';
+import { readFile, parseCSV, toCSV, download } from './io.js?v=2026.10.25-1';
+import { HELP_HTML } from './help.js?v=2026.10.25-1';
+import { VARIANTS } from './variants.js?v=2026.10.25-1';
 
 const TYPES = [bars, forest, curves, kmFig, flow, schema, stacked, dist, scatter, rank, time, part, radar, ba, meta, heat, sankey, compose], $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const clone = o => JSON.parse(JSON.stringify(o));
@@ -28,17 +29,19 @@ const STORE = 'epi-graphics-v1';
 const style = { widthKey: 'double', mm: 174, dpi: 600, font: 'arial', pt: 8, pal: 'nejm', frame: true, custom: ['#00729E', '#8E8E8E', '#B0C7D3', '#8B2E3B', '#326A82', '#4D4D4D'] };
 const figs = {}; let cur = 'bars';
 
-const initState = m => { const ex = m.example(), settings = {}; m.settings.forEach(s => (settings[s.k] = s.def)); return { settings: { ...settings, ...clone(ex.settings) }, tables: clone(ex.tables), data: ex.data ? clone(ex.data) : null }; };
-const stOf = id => (figs[id] ||= initState(TYPES.find(t => t.id === id)));
-const mod = () => TYPES.find(t => t.id === cur);
+const baseOf = k => String(k).split('~')[0], variantOf = k => String(k).split('~')[1];
+const initState = key => { const m = TYPES.find(t => t.id === baseOf(key)); let ex = m.example(); const v = variantOf(key) && (VARIANTS[m.id] || []).find(x => x.id === variantOf(key)); if (v) ex = v.make(ex); const settings = {}; m.settings.forEach(s => (settings[s.k] = s.def)); return { settings: { ...settings, ...clone(ex.settings) }, tables: clone(ex.tables), data: ex.data ? clone(ex.data) : null }; };
+const stOf = id => (figs[id] ||= initState(id));
+const mod = () => TYPES.find(t => t.id === baseOf(cur));
 
 // ---------- persistencia ----------
 function persist() { try { localStorage.setItem(STORE, JSON.stringify({ style, figs, cur })); } catch { /* sin almacenamiento */ } }
 function restore(obj) {
   if (!obj) return;
   Object.assign(style, obj.style || {});
-  for (const [k, v] of Object.entries(obj.figs || {})) if (TYPES.some(t => t.id === k)) figs[k] = v;
-  if (TYPES.some(t => t.id === obj.cur)) cur = obj.cur;
+  const okKey = k => TYPES.some(t => t.id === baseOf(k)) && (!variantOf(k) || (VARIANTS[baseOf(k)] || []).some(v => v.id === variantOf(k)));
+  for (const [k, v] of Object.entries(obj.figs || {})) if (okKey(k)) figs[k] = v;
+  if (okKey(obj.cur)) cur = obj.cur;
 }
 try { restore(JSON.parse(localStorage.getItem(STORE) || 'null')); } catch { /* ignorar */ }
 
@@ -55,15 +58,15 @@ $$('.tabs button').forEach(b => b.addEventListener('click', () => showTab(b.data
 document.addEventListener('click', e => { const g = e.target.closest('[data-go]'); if (g) showTab(g.dataset.go); });
 
 // ---------- dibujo ----------
-function renderSVG(m = mod(), st = stOf(m.id), W = null, extra = {}) {
+function renderSVG(m = mod(), st = stOf(cur), W = null, extra = {}) {
   if (m.id === 'custom') return '';
-  const pal = PALETTES[style.pal] || PALETTES.nejm, cs = style.pal === 'custom' ? style.custom : null;
+  const pk = st.pal || style.pal, pal = PALETTES[pk] || PALETTES.nejm, cs = pk === 'custom' ? style.custom : null;
   const o = { W: W || widthMM(style) * U_PER_MM, fs: style.pt * PT, pal: cs || pal.c, line: cs || pal.line || pal.c, frame: style.frame, ...extra };
   if (m.composite) o.sub = (id, w, letter) => { const m2 = TYPES.find(t => t.id === id); if (!m2 || m2.composite) return ''; try { const st2 = stOf(id); m2.sync?.(st2); return renderSVG(m2, st2, w, { frame: false, panelId: letter }); } catch (e) { console.error(e); return ''; } };
   return m.render(st, o);
 }
 function refresh(save_ = true) {
-  const m = mod(), st = stOf(m.id); m.sync?.(st);
+  const m = mod(), st = stOf(cur); m.sync?.(st);
   let svg = '';
   try { svg = renderSVG(m, st); $('#pv-err').hidden = true; }
   catch (e) { console.error(e); $('#pv-err').hidden = false; $('#pv-err').textContent = `No se pudo dibujar: ${e.message}`; }
@@ -76,17 +79,19 @@ let timer = null; const later = () => { clearTimeout(timer); timer = setTimeout(
 
 // ---------- galería ----------
 function buildGallery() {
-  $('#gallery').innerHTML = TYPES.map(m => {
-    let th = ''; try { th = renderSVG(m, initState(m), 1000); } catch (e) { th = `<p class="err">${esc(e.message)}</p>`; }
-    return `<div class="gcard${m.id === cur ? ' active' : ''}" data-type="${m.id}"><div class="thumb">${th}</div><b>${esc(m.name)}</b><small>${esc(m.desc)}</small><button class="primary" data-use="${m.id}">Usar esta plantilla</button></div>`;
-  }).join('');
+  const card = (m, key, name, desc) => `<div class="gcard${key === cur ? ' active' : ''}" data-type="${key}"><div class="thumb" data-th="${key}"></div><b>${esc(name)}</b><small>${esc(desc)}</small><button class="primary" data-use="${key}">Usar esta plantilla</button></div>`;
+  $('#gallery').innerHTML = TYPES.map(m => `<section class="gtype"><h3>${esc(m.name)} <span class="pill">${1 + (VARIANTS[m.id] || []).length} ejemplos</span></h3><p class="sub">${esc(m.desc)}</p><div class="gallery">${card(m, m.id, 'Ejemplo base', m.desc)}${(VARIANTS[m.id] || []).map(v => card(m, `${m.id}~${v.id}`, v.name, v.desc)).join('')}</div></section>`).join('');
   $$('[data-use]').forEach(b => b.addEventListener('click', () => { cur = b.dataset.use; $$('.gcard').forEach(c => c.classList.toggle('active', c.dataset.type === cur)); buildEditor(); persist(); showTab('contenido'); }));
+  // las miniaturas se dibujan por tandas para no bloquear la página
+  const todo = $$('[data-th]'); let i = 0;
+  const chunk = () => { const t0 = performance.now(); while (i < todo.length && performance.now() - t0 < 40) { const el = todo[i++], key = el.dataset.th; try { el.innerHTML = renderSVG(TYPES.find(t => t.id === baseOf(key)), initState(key), 1000); } catch (e) { el.innerHTML = `<p class="err">${esc(e.message)}</p>`; } } if (i < todo.length) setTimeout(chunk, 0); };
+  chunk();
 }
 
 // ---------- editor ----------
 function buildEditor() {
-  const m = mod(), st = stOf(m.id);
-  $('#ed-title').textContent = m.name; $('#ed-desc').textContent = m.desc;
+  const m = mod(), st = stOf(cur), vr = (VARIANTS[m.id] || []).find(x => x.id === variantOf(cur));
+  $('#ed-title').textContent = vr ? `${m.name} · ${vr.name}` : m.name; $('#ed-desc').textContent = vr ? vr.desc : m.desc;
   // datos individuales (Kaplan-Meier)
   const dEl = $('#ed-data'); dEl.innerHTML = '';
   if (m.needsData) {
@@ -102,7 +107,8 @@ function buildEditor() {
   }
   // ajustes
   const cols = st.data?.rows?.[0] ? Object.keys(st.data.rows[0]) : [];
-  $('#ed-settings').innerHTML = m.settings.map(s => {
+  const palSel = `<label>Paleta de esta figura<select data-pal><option value="">Igual que el resto (${esc((PALETTES[style.pal] || PALETTES.nejm).name)})</option>${Object.entries(PALETTES).map(([k, p]) => `<option value="${k}"${st.pal === k ? ' selected' : ''}>${esc(p.name)}</option>`).join('')}</select></label>`;
+  $('#ed-settings').innerHTML = palSel + m.settings.map(s => {
     const v = st.settings[s.k] ?? s.def ?? '';
     if (s.type === 'check') return `<label class="inline"><input type="checkbox" data-s="${s.k}" ${v ? 'checked' : ''}> ${esc(s.label)}</label>`;
     if (s.type === 'select') return `<label>${esc(s.label)}<select data-s="${s.k}">${s.opts.map(o => { const [val, lab] = Array.isArray(o) ? o : [o, o]; return `<option value="${esc(val)}"${String(v) === String(val) ? ' selected' : ''}>${esc(lab)}</option>`; }).join('')}</select></label>`;
@@ -110,6 +116,7 @@ function buildEditor() {
     if (s.type === 'textarea') return `<label class="wide">${esc(s.label)}<textarea data-s="${s.k}" rows="${s.rows || 8}" spellcheck="false">${esc(v)}</textarea></label>`;
     return `<label>${esc(s.label)}<input data-s="${s.k}" type="${s.type === 'number' ? 'number' : 'text'}"${s.step ? ` step="${s.step}"` : ''} value="${esc(v)}"></label>`;
   }).join('');
+  $('#ed-settings [data-pal]').addEventListener('input', e => { st.pal = e.target.value; later(); });
   $$('#ed-settings [data-s]').forEach(el => el.addEventListener('input', () => {
     const k = el.dataset.s, def = m.settings.find(s => s.k === k); st.settings[k] = el.type === 'checkbox' ? el.checked : def.type === 'number' ? (el.value === '' ? '' : +el.value) : el.value;
     if (def.type === 'var') { m.sync?.(st); buildTables(); }
@@ -119,7 +126,7 @@ function buildEditor() {
 }
 
 function buildTables() {
-  const m = mod(), st = stOf(m.id), host = $('#ed-tables'); host.innerHTML = '';
+  const m = mod(), st = stOf(cur), host = $('#ed-tables'); host.innerHTML = '';
   for (const T of m.tables) {
     const rows = (st.tables[T.k] ||= []), card = document.createElement('div'); card.className = 'card';
     card.innerHTML = `<div class="row between wrap gap"><h3 class="nm">${esc(T.label)}</h3><div class="row gap wrap"><button class="ghost sm" data-a="add">+ Fila</button><button class="ghost sm" data-a="paste">Pegar desde Excel</button><button class="ghost sm" data-a="csv">CSV ↓</button><label class="ghost filebtn sm">CSV ↑<input type="file" accept=".csv,.txt,.tsv" hidden></label></div></div>${T.help ? `<p class="sub">${esc(T.help)}</p>` : ''}<div class="tablewrap"><table class="data grid"><thead></thead><tbody></tbody></table></div>`;
@@ -178,11 +185,11 @@ function bindStyle() {
   document.addEventListener('click', async e => {
     const b = e.target.closest('[data-dl]'); if (!b) return;
     const svg = $('#pv-out svg'); if (!svg) return; const t = b.textContent; b.textContent = '…';
-    try { await exportFigure(svg, `${mod().id}`, b.dataset.dl, style); $('#dl-msg').textContent = `Descargado (${b.dataset.dl.toUpperCase()}).`; } catch (err) { alert(`No se pudo exportar: ${err.message}`); }
+    try { await exportFigure(svg, cur.replace('~', '_'), b.dataset.dl, style); $('#dl-msg').textContent = `Descargado (${b.dataset.dl.toUpperCase()}).`; } catch (err) { alert(`No se pudo exportar: ${err.message}`); }
     b.textContent = t;
   });
   $('#dl-pdf').addEventListener('click', () => { try { printFigure($('#pv-out svg'), style); } catch (err) { alert(err.message); } });
-  $('#ed-reset').addEventListener('click', () => { if (confirm('¿Restaurar el ejemplo de esta plantilla? Se perderán los cambios de este tipo de figura.')) { figs[cur] = initState(mod()); buildEditor(); refresh(); } });
+  $('#ed-reset').addEventListener('click', () => { if (confirm('¿Restaurar el ejemplo de esta plantilla? Se perderán los cambios de este tipo de figura.')) { figs[cur] = initState(cur); buildEditor(); refresh(); } });
   $('#pj-save').addEventListener('click', () => save('epi-graphics-proyecto.json', new Blob([JSON.stringify({ app: 'EPI-GRAPHICS', version: '2026.10.22-1', style, figs, cur }, null, 1)], { type: 'application/json' })));
   $('#pj-open').addEventListener('change', async e => { const f = e.target.files[0]; if (!f) return; try { const o = JSON.parse(await f.text()); if (o.app !== 'EPI-GRAPHICS') throw new Error('No es un proyecto de EPI-GRAPHICS.'); restore(o); set(); drawPal(); buildGallery(); buildEditor(); refresh(); } catch (err) { alert(`No se pudo abrir: ${err.message}`); } e.target.value = ''; });
   // botones de descarga rápida bajo la vista previa
@@ -191,4 +198,4 @@ function bindStyle() {
 
 $('#help').innerHTML = HELP_HTML;
 bindStyle(); buildGallery(); buildEditor();
-window.__epi = { renderSVG, TYPES, style, initState };
+window.__epi = { renderSVG, TYPES, style, initState, VARIANTS };
