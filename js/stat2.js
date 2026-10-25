@@ -1,5 +1,5 @@
 // Estadísticos pequeños que usan los gráficos nuevos (cuantiles, densidad, histograma, regresión y LOESS, correlación, Bland-Altman, Egger, treemap).
-import { qt, pt, qnorm } from './dist.js?v=2026.10.25-1';
+import { qt, pt, qnorm } from './dist.js?v=2026.10.25-2';
 
 export const mean = a => a.reduce((s, v) => s + v, 0) / a.length;
 export const sd = a => { const m = mean(a); return Math.sqrt(a.reduce((s, v) => s + (v - m) ** 2, 0) / (a.length - 1)); };

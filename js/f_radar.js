@@ -1,5 +1,5 @@
 // Radar (araña): varias series sobre ejes radiales, con polígonos rellenos y escala común.
-import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, lineOf, rowsOf, uniq, empty, legend, minus, niceTicks, INK, FRAME } from './kit.js?v=2026.10.25-1';
+import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, lineOf, rowsOf, uniq, empty, legend, minus, niceTicks, INK, FRAME } from './kit.js?v=2026.10.25-2';
 
 export const radar = {
   id: 'radar', name: 'Radar (perfil multidimensional)', short: 'Radar',

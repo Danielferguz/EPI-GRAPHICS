@@ -1,6 +1,6 @@
 // Bland-Altman: concordancia entre dos métodos de medición, con sesgo, límites de acuerdo e intervalos de confianza.
-import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, lineOf, rowsOf, uniq, natural, empty, legend, minus, niceTicks, INK, FRAME } from './kit.js?v=2026.10.25-1';
-import { blandAltman, olsLine, lcg } from './stat2.js?v=2026.10.25-1';
+import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, lineOf, rowsOf, uniq, natural, empty, legend, minus, niceTicks, INK, FRAME } from './kit.js?v=2026.10.25-2';
+import { blandAltman, olsLine, lcg } from './stat2.js?v=2026.10.25-2';
 
 const norm = r => Math.sqrt(-2 * Math.log(r() || 1e-9)) * Math.cos(2 * Math.PI * r());
 export const ba = {

@@ -1,6 +1,6 @@
 // Mapa de calor y correlograma: matriz de valores (o correlaciones de Pearson calculadas desde una base) con escala de color y valores en las celdas.
-import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, rowsOf, uniq, empty, lum, minus, niceTicks, INK, FRAME, split } from './kit.js?v=2026.10.25-1';
-import { pearson, lcg } from './stat2.js?v=2026.10.25-1';
+import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, rowsOf, uniq, empty, lum, minus, niceTicks, INK, FRAME, split } from './kit.js?v=2026.10.25-2';
+import { pearson, lcg } from './stat2.js?v=2026.10.25-2';
 
 const hex = h => { const v = h.replace('#', ''); return [0, 2, 4].map(i => parseInt(v.slice(i, i + 2), 16)); }, mix = (a, b, t) => `#${a.map((x, i) => Math.round(x + (b[i] - x) * t).toString(16).padStart(2, '0')).join('')}`;
 export const SCALES = { teal: { name: 'Secuencial azul verdoso', stops: ['#F3F8F9', '#8FBDC8', '#2E7F90', '#15404A'] }, viridis: { name: 'Viridis', stops: ['#440154', '#3B528B', '#21908C', '#5DC863', '#FDE725'] }, gray: { name: 'Escala de grises', stops: ['#F5F5F5', '#A6A6A6', '#262626'] }, div: { name: 'Divergente azul–blanco–burdeos', stops: ['#2E7F90', '#FFFFFF', '#8B2E3B'] }, divgray: { name: 'Divergente azul–blanco–gris oscuro', stops: ['#00729E', '#FFFFFF', '#4D4D4D'] } };

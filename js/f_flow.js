@@ -1,7 +1,7 @@
 // Diagrama de flujo de participantes (CONSORT/STROBE) a partir de un texto sencillo.
 //   Línea normal  = cuadro principal (flujo hacia abajo)        >  texto|subtexto = cuadro lateral de exclusiones
 //   === Nombre    = comienza un brazo (columna); lo anterior es el tronco común
-import { T, L, R, arrow, esc, textW, wrap, svgRoot, INK } from './svg.js?v=2026.10.25-1';
+import { T, L, R, arrow, esc, textW, wrap, svgRoot, INK } from './svg.js?v=2026.10.25-2';
 
 export function parseFlow(text) {
   const trunk = [], arms = []; let cur = trunk;

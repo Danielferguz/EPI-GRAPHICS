@@ -1,6 +1,6 @@
 // Gráfico de embudo (sesgo de publicación, con prueba de Egger) y gráfico de volcán.
-import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, lineOf, rowsOf, empty, legend, minus, niceTicks, INK, FRAME } from './kit.js?v=2026.10.25-1';
-import { eggerP } from './stat2.js?v=2026.10.25-1';
+import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, lineOf, rowsOf, empty, legend, minus, niceTicks, INK, FRAME } from './kit.js?v=2026.10.25-2';
+import { eggerP } from './stat2.js?v=2026.10.25-2';
 
 export const meta = {
   id: 'meta', name: 'Embudo (sesgo de publicación) y volcán', short: 'Embudo / volcán',

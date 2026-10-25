@@ -1,5 +1,5 @@
 // Diagrama de flujo proporcional (Sankey / aluvial): trayectorias de pacientes a lo largo de varias etapas.
-import { T, L, R, num, fmt, textW, svgRoot, colOf, rowsOf, uniq, empty, lum, split, INK, FRAME } from './kit.js?v=2026.10.25-1';
+import { T, L, R, num, fmt, textW, svgRoot, colOf, rowsOf, uniq, empty, lum, split, INK, FRAME } from './kit.js?v=2026.10.25-2';
 
 export const sankey = {
   id: 'sankey', name: 'Flujo de pacientes (Sankey / aluvial)', short: 'Sankey',

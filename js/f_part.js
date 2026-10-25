@@ -1,6 +1,6 @@
 // Partes de un todo: anillo, pastel, waffle (cuadrícula de 100) y treemap.
-import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, rowsOf, empty, legend, lum, minus, INK, FRAME } from './kit.js?v=2026.10.25-1';
-import { squarify } from './stat2.js?v=2026.10.25-1';
+import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, rowsOf, empty, legend, lum, minus, INK, FRAME } from './kit.js?v=2026.10.25-2';
+import { squarify } from './stat2.js?v=2026.10.25-2';
 
 const KINDS = [['donut', 'Anillo'], ['pie', 'Pastel'], ['waffle', 'Waffle (100 cuadros)'], ['treemap', 'Treemap']];
 const arc = (cx, cy, r0, r1, a0, a1) => { const p = (r, a) => [cx + r * Math.sin(a), cy - r * Math.cos(a)], large = a1 - a0 > Math.PI ? 1 : 0, A = p(r1, a0), B = p(r1, a1), C = p(r0, a1), D = p(r0, a0);

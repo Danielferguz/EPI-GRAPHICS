@@ -6,6 +6,7 @@ import { makeScale, wrap, fmtTicks, fmt, PALETTES, U_PER_MM, PT } from '../js/sv
 import { km } from '../js/models.js';
 import { dist } from '../js/f_dist.js'; import { scatter } from '../js/f_scatter.js'; import { rank } from '../js/f_rank.js'; import { time, parseDate, dateTicks } from '../js/f_time.js'; import { part } from '../js/f_part.js';
 import { radar } from '../js/f_radar.js'; import { ba } from '../js/f_ba.js'; import { meta } from '../js/f_meta.js'; import { heat, ramp } from '../js/f_heat.js'; import { sankey } from '../js/f_sankey.js'; import { compose } from '../js/f_compose.js';
+import { prisma } from '../js/f_prisma.js'; import { hbar } from '../js/f_hbar.js'; import { ftable } from '../js/f_ftable.js'; import { fmeta } from '../js/f_fmeta.js';
 import { VARIANTS } from '../js/variants.js';
 import * as S2 from '../js/stat2.js'; import { readFileSync } from 'node:fs';
 
@@ -13,7 +14,7 @@ let fails = 0, checks = 0;
 const ok = (name, cond, extra = '') => { checks++; if (!cond) { fails++; console.log('FAIL', name, extra); } else console.log('ok  ', name); };
 const o = { W: 174 * U_PER_MM, fs: 8 * PT, pal: PALETTES.nejm.c, frame: true };
 
-const ALL = [bars, forest, curves, kmFig, flow, schema, stacked, dist, scatter, rank, time, part, radar, ba, meta, heat, sankey, compose];
+const ALL = [bars, forest, curves, kmFig, flow, schema, stacked, dist, scatter, rank, time, part, radar, ba, meta, heat, sankey, prisma, hbar, ftable, fmeta, compose];
 const sub = (id, w, letter) => { const m2 = ALL.find(t => t.id === id); if (!m2 || m2.composite) return ''; const e = m2.example(), st2 = { settings: { ...Object.fromEntries(m2.settings.map(s => [s.k, s.def])), ...e.settings }, tables: e.tables, data: e.data }; m2.sync?.(st2); return m2.render(st2, { ...o, W: w, frame: false, panelId: letter }); };
 o.sub = sub;
 for (const m of ALL) {
@@ -78,4 +79,15 @@ const R2 = JSON.parse(readFileSync(new URL('reference_stat2.json', import.meta.u
   const sk = sankey.example(), svg = sankey.render({ settings: { ...sk.settings }, tables: sk.tables }, o); ok('Sankey: una banda por cada par de nodos y flujo', (svg.match(/<path /g) || []).length >= 8);
   const cp = compose.render({ settings: { cols: 2 }, tables: compose.example().tables }, o); ok('figura compuesta incluye los paneles y letras', (cp.match(/<svg /g) || []).length >= 4 && />A<\/tspan>/.test(cp)); }
 
-console.log(`\n${checks - fails}/${checks} comprobaciones correctas`); process.exit(fails ? 1 : 0);
+
+// PRISMA 2020: los números derivados del ejemplo (113 − 55 = 58 cribados; 58 − 43 = 15; 15 − 1 = 14; 14 − 0 + 7 = 21), RoB y barras
+{ const px = prisma.example(), svg = prisma.render({ settings: { ...Object.fromEntries(prisma.settings.map(s => [s.k, s.def])), ...px.settings }, tables: px.tables }, o), has = n => svg.includes(`(n=${n})`);
+  ok('PRISMA: cribados, buscados, evaluados e incluidos derivados', [58, 15, 14, 21].every(has), svg.match(/\(n=\d+\)/g)?.join(' '));
+  const v = VARIANTS.prisma.find(x => x.id === 'reasons').make(prisma.example()), s2 = prisma.render({ settings: { ...Object.fromEntries(prisma.settings.map(s => [s.k, s.def])), ...v.settings }, tables: v.tables }, o);
+  ok('PRISMA: motivos de exclusión con su n y total coherente', /Wrong population \(n=6\)/.test(s2) && /Reports excluded \(n=15\):/.test(s2) && /\(n=12\)/.test(s2), s2.match(/Reports excluded[^<]*/)?.[0]);
+  const d = VARIANTS.prisma.find(x => x.id === 'dbonly').make(prisma.example()), s3 = prisma.render({ settings: { ...Object.fromEntries(prisma.settings.map(s => [s.k, s.def])), ...d.settings }, tables: d.tables }, o); ok('PRISMA: sin otros métodos no muestra esa columna', !/other methods/.test(s3));
+  const hx = hbar.example(), sh = hbar.render({ settings: { ...Object.fromEntries(hbar.settings.map(s => [s.k, s.def])), normalize: true, labels: 'all' }, tables: hx.tables }, o); ok('barras horizontales: 8 barras × 3 segmentos', (sh.match(/fill="#(1F5FA8|85B6EE|E6E4DE)"/gi) || []).length >= 24 + 3 && /50\.4%|52\.0%|50\.\d%/.test(sh));
+  const fm = fmeta.example(), sf = fmeta.render({ settings: { ...Object.fromEntries(fmeta.settings.map(s => [s.k, s.def])) }, tables: fm.tables }, o); ok('forest RevMan: 5 estudios × 7 dominios de sesgo y 3 rombos', (sf.match(/<circle /g) || []).length >= 35 && (sf.match(/<polygon /g) || []).length >= 3);
+}
+console.log(`\n${checks - fails}/${checks} comprobaciones correctas`);
+process.exit(fails ? 1 : 0);

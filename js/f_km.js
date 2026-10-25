@@ -1,8 +1,8 @@
 // Kaplan-Meier desde datos individuales (tiempo, evento, grupo): supervivencia o incidencia acumulada, IC, marcas de censura y número en riesgo.
-import { drawCurves } from './f_curves.js?v=2026.10.25-1';
-import { km, logrank } from './models.js?v=2026.10.25-1';
-import { rng } from './dist.js?v=2026.10.25-1';
-import { T, svgRoot, num, fmt } from './svg.js?v=2026.10.25-1';
+import { drawCurves } from './f_curves.js?v=2026.10.25-2';
+import { km, logrank } from './models.js?v=2026.10.25-2';
+import { rng } from './dist.js?v=2026.10.25-2';
+import { T, svgRoot, num, fmt } from './svg.js?v=2026.10.25-2';
 
 export function exampleRows() {
   const r = rng(11), rows = [];

@@ -27,6 +27,10 @@ Todo se dibuja en el navegador: los datos no salen de tu computadora. Sitio est�
 | **Embudo y volcán** | Sesgo de publicación (Egger) y volcán | efecto, EE o P |
 | **Mapa de calor y correlograma** | Matrices y correlaciones de Pearson | celdas o base |
 | **Flujo de pacientes (Sankey)** | Trayectorias entre etapas | nodos por etapa y N |
+| **Diagrama PRISMA 2020** | Flujo de revisión sistemática (bases de datos y otros métodos) | fuentes con n, duplicados, excluidos y motivos |
+| **Barras horizontales** | Apiladas, agrupadas o simples con valores directos | series y una fila por barra |
+| **Tabla resumen con forest** | Desenlaces y subgrupos con N, método, forest, efecto, I² y P de interacción | filas out/sub/tot con efecto e IC |
+| **Forest de metaanálisis (RevMan)** | Estudios con peso, subtotales, total y riesgo de sesgo A–G | estimaciones por estudio y códigos de sesgo |
 | **Figura compuesta** | Varias plantillas en una sola figura con letras de panel | plantilla y columnas por panel |
 
 Cada plantilla trae un ejemplo base y **varias variantes** (`js/variants.js`, 77 ejemplos en total) con **datos simulados de nefrología**; el forest admite hasta cuatro columnas de texto extra con título agrupado, y cada figura puede tener su propia paleta. Las tablas admiten «Pegar desde Excel», importar/exportar CSV y guardar/abrir el proyecto completo (`.json`).
@@ -50,7 +54,7 @@ node tests/validate.mjs       # 347 comprobaciones: humo de las 18 plantillas y 
 ```
 index.html · css/style.css
 js/svg.js        primitivas SVG, medición de texto, escalas, paletas
-js/f_*.js        una plantilla por archivo (bars, forest, curves, km, flow, schema, stacked, dist, scatter, rank, time, part, radar, ba, meta, heat, sankey, compose)
+js/f_*.js        una plantilla por archivo (bars, forest, curves, km, flow, schema, stacked, dist, scatter, rank, time, part, radar, ba, meta, heat, sankey, prisma, hbar, ftable, fmeta, compose)
 js/kit.js        marco de panel con ejes en L, leyenda y utilidades compartidas
 js/stat2.js      cuantiles, KDE, histograma, OLS con banda, LOESS, Bland-Altman, Egger, treemap
 js/app.js        galería, editor de tablas, vista previa y exportación

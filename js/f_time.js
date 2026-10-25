@@ -1,6 +1,6 @@
 // Evolución temporal: líneas, áreas, áreas apiladas y curva epidémica (barras por periodo), con eventos marcados y fechas en el eje.
-import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, lineOf, rowsOf, uniq, natural, empty, legend, minus, niceTicks, INK, FRAME } from './kit.js?v=2026.10.25-1';
-import { lcg } from './stat2.js?v=2026.10.25-1';
+import { T, L, R, num, fmt, textW, svgRoot, frame, colOf, lineOf, rowsOf, uniq, natural, empty, legend, minus, niceTicks, INK, FRAME } from './kit.js?v=2026.10.25-2';
+import { lcg } from './stat2.js?v=2026.10.25-2';
 
 const MESES = { es: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'], en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] };
 // fecha ISO (AAAA, AAAA-MM, AAAA-MM-DD) → días desde 1970-01-01; NaN si no es fecha
